@@ -37,7 +37,7 @@ public class FoodPresenter {
 
     public void loadData() {
         iFoodView.showLoading();
-        iLoadFoodData.getData(Constant.LISTURL, new OnDataLoadListener() {
+        iLoadFoodData.getData(Constant.LIST_URL, new OnDataLoadListener() {
             @Override
             public void onSuccess(final List<ResponseFdTngouModel> foodModes) {
                 handler.post(new Runnable() {

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">module</string>
+    <string name="StringRefresh">刷新数据</string>
 </resources>

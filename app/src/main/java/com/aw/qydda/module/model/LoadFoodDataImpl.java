@@ -29,6 +29,7 @@ public class LoadFoodDataImpl implements ILoadFoodData {
         //模拟网络请求,这里使用xutils3.0+
         RequestParams params = new RequestParams(httpUrl);
         params.addQueryStringParameter("wd", "xUtils");
+        //这里网络请求数据可以封装采用an-base框架。
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -40,10 +41,10 @@ public class LoadFoodDataImpl implements ILoadFoodData {
                 Log.d(TAG, "--rb.getTngou--" + rb.getTngou());
                 JsonArray tngouArray = rb.getTngou();
                 List<ResponseFdTngouModel> foodModels = new ArrayList<ResponseFdTngouModel>();
+                ResponseFdTngouModel rbTngou = new ResponseFdTngouModel();
                 for (int i = 0; i < tngouArray.size(); i++) {
                     JsonObject obj = tngouArray.get(i).getAsJsonObject();
                     Log.d(TAG, "--obj--" + obj);
-                    ResponseFdTngouModel rbTngou = new ResponseFdTngouModel();
                     rbTngou = gson.fromJson(obj, ResponseFdTngouModel.class);
                     Log.d(TAG, "--rbTngou--img--" + rbTngou.getImg());
                     foodModels.add(rbTngou);
@@ -52,9 +53,6 @@ public class LoadFoodDataImpl implements ILoadFoodData {
 //                String rt = gson.toJson(result);
 //                foodModels = gson.fromJson(rt, new TypeToken<List<ResponseFdTngouModel>>() {
 //                }.getType());
-                for (ResponseFdTngouModel rbTngou : foodModels) {
-                    Log.d(TAG, "--img--" + rbTngou.getImg());
-                }
                 onDataLoadListener.onSuccess(foodModels);
             }
 

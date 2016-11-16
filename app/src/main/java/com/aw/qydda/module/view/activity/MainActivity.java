@@ -3,6 +3,7 @@ package com.aw.qydda.module.view.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements IFoodView {
     private ListView listView;
     private FoodPresenter presenter = new FoodPresenter(this);
     private ProgressBar progressBar;
+    private Button btnRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,13 @@ public class MainActivity extends AppCompatActivity implements IFoodView {
     private void _initView() {
         listView = (ListView) findViewById(R.id.lv);
         progressBar = (ProgressBar) findViewById(R.id.pb);
+        btnRefresh = (Button) findViewById(R.id.btnRefresh);
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.loadData();
+            }
+        });
     }
 
     @Override

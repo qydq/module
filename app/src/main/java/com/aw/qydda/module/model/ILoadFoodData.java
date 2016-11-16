@@ -5,5 +5,5 @@ package com.aw.qydda.module.model;
  */
 
 public interface ILoadFoodData {
-    public void getData(String httpurl, OnDataLoadListener onDataLoadListener);
+    void getData(String httprl, OnDataLoadListener onDataLoadListener);
 }

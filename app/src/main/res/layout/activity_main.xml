@@ -6,10 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.MainActivity">
 
+    <Button
+        android:id="@+id/btnRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:text="@string/StringRefresh" />
+
     <ListView
         android:id="@+id/lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btnRefresh" />
 
     <ProgressBar
         android:id="@+id/pb"
