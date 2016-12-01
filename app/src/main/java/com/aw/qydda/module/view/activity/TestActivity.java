@@ -90,7 +90,7 @@ public class TestActivity extends Activity {
 
             @Override
             public void onButtonClick(View button, int position) {
-                removeItem(position);
+                removeItemByPosition(position);
             }
         });
         btn.setOnClickListener(new View.OnClickListener() {
@@ -98,30 +98,43 @@ public class TestActivity extends Activity {
             public void onClick(View view) {
                 String name = editText1.getText().toString().trim();
                 String pass = editText2.getText().toString().trim();
+                String oldPass = null;
+                String oldName = null;
                 for (ResponseTtModel rb : rbs) {
                     if (rb.getName().equals(name)) {
                         isExist = true;
+                        oldPass = rb.getPass();
+                        oldName = rb.getName();
                     }
                 }
-                //如果保存的数据是否存在
+                //如果保存的数据是否存在,如果存在则先把数据清除，然后再添加数据
                 if (isExist) {
-
+                    removeItemByName(arrays, oldName);
+                    removeItemByName(arrayPass, oldPass);
                 } else {
-                    rbs.clear();
-                    arrays.add(name);
-                    arrayPass.add(pass);
-                    for (int i = 0; i < arrays.size(); i++) {
-                        ResponseTtModel rb = new ResponseTtModel();
-                        rb.setName(arrays.get(i));
-                        rb.setPass(arrayPass.get(i));
-                        rbs.add(rb);
-                    }
-                    String json = gson.toJson(rbs);
-                    Log.d(TAG, "--qydq@@--json--" + json);
-                    edit.putString("gson", json);
-                    edit.commit();
-                    mAdapter.notifyDataSetChanged();
                 }
+                rbs.clear();//保存数据用rbs减少对象的使用，并且先清空。（这里可以用DB的，但是强迫症，密码应该加密保存）
+                isExist = false;
+                arrays.add(name);
+                arrayPass.add(pass);
+                for (int i = 0; i < arrays.size(); i++) {
+                    ResponseTtModel rb = new ResponseTtModel();
+                    rb.setName(arrays.get(i));
+                    rb.setPass(arrayPass.get(i));
+                    rbs.add(rb);
+                }
+                String json = gson.toJson(rbs);
+                Log.d(TAG, "--qydq@@--json--" + json);
+                edit.putString("gson", json);
+                edit.commit();
+                //排序
+//                arrays.clear();
+//                arrayPass.clear();
+//                for (int i = rbs.size() - 1; i > 0; i--) {
+//                    arrays.add(rbs.get(i).getName());
+//                    arrayPass.add(rbs.get(i).getPass());
+//                }
+                mAdapter.notifyDataSetChanged();
             }
         });
         mSlidingDeleteLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -129,7 +142,7 @@ public class TestActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> view, View parent, int position,
                                     long id) {
-                Toast.makeText(TestActivity.this, "click item " + position + "the value is-->" + arrays.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(TestActivity.this, "click item " + position + "name:" + arrays.get(position) + "pass:" + arrayPass.get(position), Toast.LENGTH_SHORT).show();
             }
         });
         mSlidingDeleteLv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -143,7 +156,7 @@ public class TestActivity extends Activity {
         });
     }
 
-    private void removeItem(int position) {
+    private void removeItemByPosition(int position) {
         arrays.remove(position);
         arrayPass.remove(position);
         mAdapter.notifyDataSetChanged();
@@ -159,6 +172,17 @@ public class TestActivity extends Activity {
         Log.d(TAG, "--qydq@@--removeItem--json--" + json);
         edit.putString("gson", json);
         edit.commit();
+    }
+
+    public void removeItemByName(List<String> list, String obj) {
+        if (list.size() == 0) {
+        } else {
+            for (int i = 0; i < arrays.size(); i++) {
+                if (obj == list.get(i)) {
+                    list.remove(obj);
+                }
+            }
+        }
     }
 
     public class MyAdapter extends BaseAdapter {
