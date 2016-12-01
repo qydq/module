@@ -7,5 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <declare-styleable name="SlidingDeleteListView">
+        <attr name="buttonID" format="reference"/>
+        <attr name="enableSliding" format="boolean"/>
+    </declare-styleable>
 </resources>
