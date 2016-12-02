@@ -87,7 +87,7 @@ public class TestActivity extends Activity {
                 arrays.add(rb.getName());
                 arrayPass.add(rb.getPass());
             }
-            if (rbs.size() != 0) {
+            if (rbs.size() != 0 && recentlyChoosePosition > 0) {
                 editText1.setText(rbs.get(recentlyChoosePosition).getName());
                 editText2.setText(rbs.get(recentlyChoosePosition).getPass());
             }
@@ -111,7 +111,7 @@ public class TestActivity extends Activity {
                 //如果删除的位置大于选中的位置，则不做处理，还是之前的位置，如果等于则默认选择第一个。
                 if (position > recentlyChoosePosition) {
                 } else if (position == recentlyChoosePosition) {
-                    edit.putInt("recentlyChoosePosition", 0);
+                    edit.putInt("recentlyChoosePosition", -1);
                     edit.commit();
                 } else {
                     edit.putInt("recentlyChoosePosition", recentlyChoosePosition - 1);
@@ -152,6 +152,7 @@ public class TestActivity extends Activity {
                 String json = gson.toJson(rbs);
                 Log.d(TAG, "--qydq@@--json--" + json);
                 edit.putString("gson", json);
+                edit.putInt("recentlyChoosePosition", arrays.size() - 1);
                 edit.commit();
                 //排序
 //                arrays.clear();
@@ -182,7 +183,6 @@ public class TestActivity extends Activity {
                 mAdapter.setSelection(position);
 //                mAdapter.notifyDataSetInvalidated();
                 mAdapter.notifyDataSetChanged();//通知改变adapter
-
             }
         });
         mSlidingDeleteLv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
