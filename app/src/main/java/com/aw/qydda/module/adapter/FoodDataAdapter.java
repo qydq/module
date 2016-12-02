@@ -13,6 +13,7 @@ import com.aw.qydda.module.R;
 import com.aw.qydda.module.model.entity.ResponseFdTngouModel;
 import com.aw.qydda.module.model.utils.Constant;
 
+import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.util.List;
@@ -26,11 +27,14 @@ public class FoodDataAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private static String TAG = "FoodDataAdapter";
+    private ImageOptions options;
 
     public FoodDataAdapter(List<ResponseFdTngouModel> list, Context context) {
         this.list = list;
         this.context = context;
         inflater = LayoutInflater.from(context);
+        options = new ImageOptions.Builder().setLoadingDrawableId(R.drawable.wifichoose).setFailureDrawableId(R.drawable.loading).setUseMemCache(true).setCircular(true).build();
+
     }
 
     @Override
@@ -63,7 +67,7 @@ public class FoodDataAdapter extends BaseAdapter {
         holder.description.setText(foodEntity.getDescription());
 
         String img = Constant.BASE_IMAGE + foodEntity.getImg();
-        x.image().bind(holder.iv, img);
+        x.image().bind(holder.iv, img, options);
 //        Log.d(TAG, "--img--" + img);
 //        Picasso.with(context).load(foodEntity.getImg()).centerCrop().resizeDimen(R.dimen.iv_width, R.dimen.iv_width).into(holder.iv);
         return convertView;

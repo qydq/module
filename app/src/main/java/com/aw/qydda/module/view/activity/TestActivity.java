@@ -87,7 +87,7 @@ public class TestActivity extends Activity {
                 arrays.add(rb.getName());
                 arrayPass.add(rb.getPass());
             }
-            if (rbs.size() != 0 && recentlyChoosePosition > 0) {
+            if (rbs.size() != 0 && recentlyChoosePosition >= 0) {
                 editText1.setText(rbs.get(recentlyChoosePosition).getName());
                 editText2.setText(rbs.get(recentlyChoosePosition).getPass());
             }
