@@ -6,7 +6,7 @@
     <com.aw.qydda.module.view.SlidingDeleteListView
         android:id="@+id/sliding_delete_lv"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="400dp"
         slidingdeletelistview:buttonID="@+id/delete_btn"
         slidingdeletelistview:enableSliding="true" />
 
